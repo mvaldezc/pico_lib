@@ -1,12 +1,42 @@
-CMakeLists.txt.user
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Testing
-Makefile
-cmake_install.cmake
-install_manifest.txt
-compile_commands.json
-CTestTestfile.cmake
-_deps
-CMakeUserPresets.json
+# Ignore build directories
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
+
+# Ignore generated files
+*.o
+*.obj
+*.so
+*.a
+*.lib
+*.dll
+*.exe
+*.out
+
+# Ignore user-specific files
+*.user
+*.swp
+*.swo
+*.swn
+*.bak
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore Pico SDK and toolchain files if they are installed locally
+/.pico-sdk/
+/.toolchain/
+raspberrypi-swd.cfg
+
+# Ignore VS Code specific files
+.vscode/
+.DS_Store
