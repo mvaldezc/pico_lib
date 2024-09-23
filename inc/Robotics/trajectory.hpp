@@ -1,7 +1,7 @@
 #pragma once 
 #include <list>
+#include <cstdint>
 #include "configuration_space.hpp"
-#include "pico/mutex.h"
 
 namespace Robotics {
     /**

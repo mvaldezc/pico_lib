@@ -35,6 +35,9 @@ add_executable(pico_lib pico_lib.cpp
   src/StateMachine/RobotArm/state_transition_matrix.cpp
   src/StateMachine/RobotArm/fsm_state_factory.cpp
   src/StateMachine/RobotArm/states.cpp
+  src/Communication/RobotArm/communication_handler.cpp
+  src/Communication/Hardware/i2c_slave.cpp
+  src/Robotics/trajectory.cpp
 )
 
 pico_set_program_name(pico_lib "pico_lib")
@@ -51,8 +54,12 @@ target_include_directories(pico_lib PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/inc/Mutex
   ${CMAKE_CURRENT_SOURCE_DIR}/inc/Motor
   ${CMAKE_CURRENT_SOURCE_DIR}/inc/Communication
+  ${CMAKE_CURRENT_SOURCE_DIR}/inc/Communication/Hardware
+  ${CMAKE_CURRENT_SOURCE_DIR}/inc/Communication/RobotArm
   ${CMAKE_CURRENT_SOURCE_DIR}/inc/StateMachine
   ${CMAKE_CURRENT_SOURCE_DIR}/inc/StateMachine/RobotArm
+  ${CMAKE_CURRENT_SOURCE_DIR}/inc/Robotics
+  ${CMAKE_CURRENT_SOURCE_DIR}/inc/Utilities
 )
 
 # Add any user requested libraries

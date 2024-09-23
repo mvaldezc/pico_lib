@@ -20,7 +20,7 @@ namespace RobotArm {
     #define RAW(rxId) static_cast<RxMessageId>(rxId)
     using Callback = std::function<void(const uint8_t * msgData, const size_t dataLength)>;
 
-    constexpr enum class RxIds : RxMessageId 
+    enum class RxIds : RxMessageId 
     {
         EMERGENCY_STOP = 0x00,
         CANCEL = 0x01,
@@ -29,7 +29,8 @@ namespace RobotArm {
         START = 0x04,
         PAUSE = 0x05,
         RESUME = 0x06,
-        PROGRAM_DATA = 0x07
+        PROGRAM_DATA = 0x07,
+        MCU_RESET = 0x08
     };
 
     void emergencyStopCallback(const uint8_t * msgData, const size_t dataLength);
@@ -48,6 +49,8 @@ namespace RobotArm {
 
     void resumeProgramCallback(const uint8_t * msgData, const size_t dataLength);
 
+    void resetCallback(const uint8_t * msgData, const size_t dataLength);
+
     const std::unordered_map<RxMessageId, Callback> messageDictionary =
         {
             {RAW(RxIds::EMERGENCY_STOP), emergencyStopCallback},
@@ -57,7 +60,8 @@ namespace RobotArm {
             {RAW(RxIds::START), startProgramCallback},
             {RAW(RxIds::PAUSE), pauseProgramCallback},
             {RAW(RxIds::RESUME), resumeProgramCallback},
-            {RAW(RxIds::PROGRAM_DATA), programDataCallback}
+            {RAW(RxIds::PROGRAM_DATA), programDataCallback},
+            {RAW(RxIds::MCU_RESET), resetCallback}
         };
 
     void rxCallback(RxMessageId msgId, size_t dataLength, uint8_t * msgData);

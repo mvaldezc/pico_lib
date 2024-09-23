@@ -2,6 +2,8 @@
 #include "pico/stdlib.h"
 #include "hardware/timer.h"
 #include "fsm_state_manager.hpp"
+#include "i2c_slave.hpp"
+#include "communication_handler.hpp"
 
 int64_t alarm_callback(alarm_id_t id, void *user_data) {
     // Put your timeout handler code in here
@@ -14,6 +16,9 @@ int main()
 {
     auto stateManager = StateMachine::RobotArm::FSMStateManager::getInstance();
     stateManager->handleEvent(StateMachine::RobotArm::Event::Done);
+
+    Communication::Hardware::I2CSlave::init(&Communication::RobotArm::rxCallback, 
+                                            &Communication::RobotArm::txCallback, 55, true);
 
     stdio_init_all();
 

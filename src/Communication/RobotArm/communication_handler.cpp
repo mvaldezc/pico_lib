@@ -1,5 +1,6 @@
 #include "communication_handler.hpp"
 #include "fsm_state_manager.hpp"
+#include "reset.hpp"
 
 namespace Communication{
 namespace RobotArm{
@@ -53,6 +54,11 @@ namespace RobotArm{
     void resumeProgramCallback(const uint8_t * msgData, const size_t dataLength)
     {
         stateManager->handleEvent(Event::Resume);
+    }
+
+    void resetCallback(const uint8_t * msgData, const size_t dataLength)
+    {
+        Utilities::reset();
     }
 
     void rxCallback(RxMessageId msgId, size_t dataLength, uint8_t * msgData)

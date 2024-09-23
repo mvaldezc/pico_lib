@@ -190,8 +190,5 @@ namespace Hardware {
 
     };
 
-    RxHandler I2CSlave::rxHandler = nullptr;
-    TxHandler I2CSlave::txHandler = nullptr;
-
 } // namespace Hardware
 } // namespace Communication
