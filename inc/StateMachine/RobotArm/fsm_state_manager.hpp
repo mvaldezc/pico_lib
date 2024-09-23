@@ -9,10 +9,8 @@ namespace StateMachine {
 		class FSMStateManager : public StateManager<StateId, Event, stateTransMatrix>
 		{
 			public:
-				FSMStateManager() : StateManager(StateId::Init) 
-				{
-					state = FSMStateFactory::createState(StateId::Init, this);
-				}
+				FSMStateManager() : StateManager(StateId::Init) {}
+				
 				static StateManager * getInstance()
 				{
 					lock_guard<mutex_t> lock(createStateManagerMutex);

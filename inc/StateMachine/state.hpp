@@ -44,4 +44,5 @@ namespace StateMachine {
         const StateId currentState;
         const StateManager_ * manager;
     };
-}
+    
+}   // namespace StateMachine

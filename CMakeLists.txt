@@ -16,7 +16,7 @@ else()
     set(USERHOME $ENV{HOME})
 endif()
 set(sdkVersion 2.0.0)
-set(toolchainVersion RISCV_COREV_MAY_24)
+set(toolchainVersion 13_2_Rel1)
 set(picotoolVersion 2.0.0)
 include(${USERHOME}/.pico-sdk/cmake/pico-vscode.cmake)
 # ====================================================================================
@@ -31,7 +31,6 @@ project(pico_lib C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-
 add_executable(pico_lib pico_lib.cpp
   src/StateMachine/RobotArm/state_transition_matrix.cpp
   src/StateMachine/RobotArm/fsm_state_factory.cpp
@@ -68,4 +67,3 @@ target_link_libraries(pico_lib
         )
 
 pico_add_extra_outputs(pico_lib)
-

@@ -1,11 +1,11 @@
 #pragma once
 #include <memory>
+#include <atomic>
+#include "state.hpp"
+#include "state_factory.hpp"
 #include "pico/critical_section.h"
 #include "pico/mutex.h"
 #include "lock_guard.hpp"
-#include "state.hpp"
-#include "state_factory.hpp"
-#include <atomic>
 
 namespace StateMachine {
 
@@ -21,7 +21,6 @@ namespace StateMachine {
     template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
     class StateFactory;
 
-    // equivalent to static mutex declaration + mutex_init()
     auto_init_mutex(createStateManagerMutex);
     auto_init_mutex(stateTransitionMutex);
 
@@ -34,7 +33,7 @@ namespace StateMachine {
      * @details
      * It implements a static mutex to avoid race conditions during singleton creation.
      * And a critical_section for concurrent access of its non-reentrant methods.
-     * NOTE: For template classes, all member function defenitions must be in the header file. 
+     * NOTE: For template classes, all member function definitions must be in the header file. 
      * 
      * @tparam StateId Enum class representing the possible states.
      * @tparam Event Enum class representing the events that trigger state transitions.
@@ -46,9 +45,10 @@ namespace StateMachine {
     {   
         protected:
             using State_ = State<StateId, Event, FSM_STM>;
-            StateManager(StateId sId) : state(nullptr), currentStateId(sId)
+            StateManager(StateId sId) : currentStateId(sId)
             {
                 critical_section_init(&stateManagerLock);
+                state = StateFactory<StateId, Event, FSM_STM>::createState(sId, this);
             }
 
             static StateManager * instance;
@@ -56,11 +56,11 @@ namespace StateMachine {
             critical_section_t stateManagerLock;
             StateId currentStateId;
             std::atomic_bool stateChanged = false;
+            std::atomic_bool initialized = false;
 
             // Transition to a new state.
             void stateTransition(std::unique_ptr<State_> && newState)
             {
-                lock_guard<mutex_t> mutexWrapper(stateTransitionMutex);
                 state = std::move(newState);
             }
 
@@ -85,15 +85,16 @@ namespace StateMachine {
             // Handle event in current state.
             void handleEvent(Event && event)
             {
+                auto lastStateId = currentStateId;
                 critical_section_enter_blocking(&stateManagerLock);
                 // Update the current state based on the event using the state transition matrix
                 currentStateId = FSM_STM(currentStateId, event);
                 critical_section_exit(&stateManagerLock);
-
-                stateChanged = true;
+                // If state has changed
+                stateChanged = (lastStateId != currentStateId);
             }
 
-            // Monitor state changes, enter, run and exit states. To be called in a loop.
+            // Monitor state changes, enter, run and exit states. To be called in a loop, from a single thread.
             void run()
             {
                 // If state has changed
@@ -102,7 +103,7 @@ namespace StateMachine {
                     // Exit current state
                     state->onExit();
                     // Create new state
-                    auto newState = StateFactory<StateId, Event, FSM_STM>::createState(currentStateId);
+                    auto newState = StateFactory<StateId, Event, FSM_STM>::createState(currentStateId, this);
                     // Transition to new state
                     stateTransition(std::move(newState));
                     // Enter new state
@@ -110,8 +111,21 @@ namespace StateMachine {
                     stateChanged = false;
                 }
 
+                // If initial state
+                if(initialized == false)
+                {
+                    state->onEnter();
+                    initialized = true;
+                }
+
                 // Run current state
                 state->run();
+            }
+
+            // Get current state id.
+            StateId getCurrentStateId() const noexcept
+            {
+                return currentStateId;
             }
 
             // Singleton shouldn't be cloneable nor assignable
