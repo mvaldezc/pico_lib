@@ -1,8 +1,8 @@
 /***********************************************************************
- * @file	:	dma.hpp
+ * @file	:	dma_wrapper.hpp
  * @brief 	:	DMA raii class
  * 				RAII class to manage DMA transfers of rp2350.
- * @author	:	Marco Valdez @marcovc41
+ * @author	:	Marco Valdez @mvaldezc
  *
  ***********************************************************************/
 
@@ -26,6 +26,7 @@ constexpr uint8_t RING_BITS = [](){
 }();
 
 namespace Communication {
+namespace Hardware {
 
     class RxDMA
     {
@@ -58,4 +59,6 @@ namespace Communication {
             uint channel;
             dma_channel_config config;
     };
+    
+} // namespace Hardware
 } // namespace Communication

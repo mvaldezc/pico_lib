@@ -2,7 +2,7 @@
  * @file	:	i2c_slave.hpp
  * @brief 	:	I2C Slave Library
  * 				Library that enables i2c slave functionality in rp2350.
- * @author	:	Marco Valdez @marcovc41
+ * @author	:	Marco Valdez @mvaldezc
  *
  ***********************************************************************/
 
@@ -35,6 +35,7 @@ constexpr uint I2C_BAUD_RATE = 400000;      // I2C baud rate b/s
 constexpr uint8_t DEFAULT_I2C_SLAVE_ADDRESS = 0x55; // I2C device address
 
 namespace Communication {
+namespace Hardware {
 
     /**
      * @class I2CSlave
@@ -166,6 +167,7 @@ namespace Communication {
                 if (rxInProgress && rxHandler != nullptr)
                 {
                     rxHandler(*bufferFront, rxBuffer.capacity, (bufferFront+1));
+                    rxBuffer.clear();
                 }
             }
 
@@ -191,4 +193,5 @@ namespace Communication {
     RxHandler I2CSlave::rxHandler = nullptr;
     TxHandler I2CSlave::txHandler = nullptr;
 
+} // namespace Hardware
 } // namespace Communication

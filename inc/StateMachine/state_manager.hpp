@@ -22,7 +22,6 @@ namespace StateMachine {
     class StateFactory;
 
     auto_init_mutex(createStateManagerMutex);
-    auto_init_mutex(stateTransitionMutex);
 
     /**
      * @class StateManager
@@ -58,7 +57,7 @@ namespace StateMachine {
             std::atomic_bool stateChanged = false;
             std::atomic_bool initialized = false;
 
-            // Transition to a new state.
+            // Transition to a new state. Not thread-safe.
             void stateTransition(std::unique_ptr<State_> && newState)
             {
                 state = std::move(newState);
@@ -126,6 +125,11 @@ namespace StateMachine {
             StateId getCurrentStateId() const noexcept
             {
                 return currentStateId;
+            }
+
+            StateId getPerformingStateId() const noexcept
+            {
+                return state->getStateId();
             }
 
             // Singleton shouldn't be cloneable nor assignable

@@ -1,3 +1,11 @@
+/***********************************************************************
+ * @file	:	lock_gaurd.hpp
+ * @brief 	:	Lock guard implementation
+ * 				RAII mutex wrapper implementation for Raspberry Pico.
+ * @author	:	Marco Valdez @mvaldezc
+ *
+ ***********************************************************************/
+
 #pragma once
 #include "pico/mutex.h"
 

@@ -2,7 +2,7 @@
  * @file	:	message_format.hpp
  * @brief 	:	Message Format Interface
  *              Signature of message frame handlers.
- * @author	:	Marco Valdez @marcovc41
+ * @author	:	Marco Valdez @mvaldezc
  *
  ***********************************************************************/
 
@@ -21,7 +21,7 @@ namespace Communication {
      * @brief Function pointer signature that is called by the system when a received message
      *        interruption occurs.
      */
-    typedef void (*RxHandler)(RxMessageId msgId, uint8_t dataLength, uint8_t * data);
+    typedef void (*RxHandler)(RxMessageId msgId, size_t dataLength, uint8_t * data);
 
     /**
      * @brief Function pointer signature that is called by the system when a message request
