@@ -129,7 +129,7 @@ TEST(FSMStateManagerTest, concurrentSingletonCreation)
 }
 
 // Test state factory creation
-TEST(FSMStateFactory, stateCreation)
+TEST(FSMStateFactoryTest, stateCreation)
 {
     using namespace StateMachine::RobotArm;
     // Create states
