@@ -82,7 +82,7 @@ namespace StateMachine {
             }
 
             // Handle event in current state.
-            void handleEvent(Event && event)
+            virtual void handleEvent(Event && event)
             {
                 auto lastStateId = currentStateId;
                 critical_section_enter_blocking(&stateManagerLock);
@@ -127,7 +127,7 @@ namespace StateMachine {
                 return currentStateId;
             }
 
-            StateId getPerformingStateId() const noexcept
+            virtual StateId getPerformingStateId() const noexcept
             {
                 return state->getStateId();
             }

@@ -3,6 +3,7 @@
 #include "fsm_state_manager.hpp"
 #include "mock_states.hpp"
 #include "mock_factory.hpp"
+#include <iostream>
 
 // Test singleton creation
 TEST(FSMStateManagerTest, getInstance)

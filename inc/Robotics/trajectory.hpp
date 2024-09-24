@@ -21,7 +21,7 @@ namespace Robotics {
 
             Waypoint_t getNextWaypoint();
             bool isTrajectoryComplete();
-            void saveWaypoints(const uint8_t * rawWaypoints, const size_t size);
+            virtual void saveWaypoints(const uint8_t * rawWaypoints, const size_t size);
             void saveWaypoints(const Waypoint_t * waypoints, const size_t size);
             void clearWaypoints();
             size_t numOfWaypoints();

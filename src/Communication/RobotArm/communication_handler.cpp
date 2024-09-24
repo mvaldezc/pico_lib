@@ -32,7 +32,10 @@ namespace RobotArm{
     {
         if (stateManager->getPerformingStateId() == StateId::LoadProgram)
         {
-            programData->saveWaypoints(msgData, dataLength);
+            if (programData != nullptr && msgData != nullptr && dataLength > 0)
+            {
+                    programData->saveWaypoints(msgData, dataLength);
+            }
         }
     }
 
@@ -83,6 +86,11 @@ namespace RobotArm{
     void installDataContainer(std::shared_ptr<Robotics::Trajectory> via_points)
     {
         programData = via_points;
+    }
+
+    void uninstallDataContainer()
+    {
+        programData.reset();
     }
 
 } // namespace RobotArm
