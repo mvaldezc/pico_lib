@@ -34,7 +34,7 @@ pico_sdk_init()
 add_executable(pico_lib pico_lib.cpp
   src/StateMachine/RobotArm/state_transition_matrix.cpp
   src/StateMachine/RobotArm/fsm_state_factory.cpp
-  src/StateMachine/RobotArm/states.cpp
+  src/StateMachine/RobotArm/states_behavior.cpp
   src/Communication/RobotArm/communication_handler.cpp
   src/Communication/Hardware/i2c_slave.cpp
   src/Robotics/trajectory.cpp

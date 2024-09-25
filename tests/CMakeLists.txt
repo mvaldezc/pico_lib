@@ -42,7 +42,7 @@ add_executable(tests
     test_communication_handler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/StateMachine/RobotArm/state_transition_matrix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/StateMachine/RobotArm/fsm_state_factory.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/../src/StateMachine/RobotArm/states.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/StateMachine/RobotArm/states_behavior.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/Communication/RobotArm/communication_handler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/Robotics/trajectory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/mocks/reset.cpp

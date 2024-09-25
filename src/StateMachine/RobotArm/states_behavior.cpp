@@ -1,4 +1,4 @@
-#include "states.hpp"
+#include "states_behavior.hpp"
 using namespace StateMachine::RobotArm::States;
 
 void Init::run()
