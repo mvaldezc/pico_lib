@@ -1,9 +1,20 @@
+/***********************************************************************
+ * @file	:	state_transition_matrix.hpp
+ * @brief 	:	RobotArm state transition matrix
+ *              Defines the state transitions for a RobotArm.
+ * @author	:	Marco Valdez @mvaldezc
+ *
+ ***********************************************************************/
+
 #pragma once
 #include <cstdint>
 
 namespace StateMachine {
 namespace RobotArm {
 
+    /**
+     * @brief Enum class representing the events that trigger state transitions of the RobotArm.
+     */
     enum class Event : uint8_t
     {
         EmergencyStop,
@@ -18,6 +29,9 @@ namespace RobotArm {
         None
     };
 
+    /**
+     * @brief Enum class representing the possible states of the RobotArm.
+     */
     enum class StateId : uint8_t
     {
         Init,
@@ -34,6 +48,13 @@ namespace RobotArm {
         EmergencyStop
     };
 
+    /**
+     * @brief State transition matrix of the RobotArm finite state machine.
+     * 
+     * @param currentState Current state.
+     * @param event Event.
+     * @return StateId Next state.
+     */
     StateId stateTransMatrix(StateId currentState, Event event);
 
 } // namespace RobotArm

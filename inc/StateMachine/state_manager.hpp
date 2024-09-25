@@ -1,3 +1,11 @@
+/***********************************************************************
+ * @file	:	state_manager.hpp
+ * @brief 	:	StateManager class
+ *              Template library for finite state machine functionality.
+ * @author	:	Marco Valdez @mvaldezc
+ *
+ ***********************************************************************/
+
 #pragma once
 #include <memory>
 #include <atomic>
@@ -21,17 +29,20 @@ namespace StateMachine {
     template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
     class StateFactory;
 
+    // equivalent to static mutex declaration + mutex_init()
     auto_init_mutex(createStateManagerMutex);
 
     /**
      * @class StateManager
-     * @brief Manages the machine state transitions.
-     * StateManager is defined as a leaky singleton and provides a thread/ISR-safe API for 
-     * triggering machine state transitions.
+     * @brief Manages a finite state machine.
+     * StateManager is defined as a leaky singleton. It provides a thread/ISR-safe API for 
+     * triggering state transitions via events and running the state's behavior. Template parameters
+     * allow defining the sets of states, events, and the state transition matrix.
      * 
      * @details
      * It implements a static mutex to avoid race conditions during singleton creation.
-     * And a critical_section for concurrent access of its non-reentrant methods.
+     * It uses a critical_section for concurrent access of its non-reentrant methods.
+     * It runs state-behavior folowing the state-machine design pattern.
      * NOTE: For template classes, all member function definitions must be in the header file. 
      * 
      * @tparam StateId Enum class representing the possible states.
@@ -44,44 +55,66 @@ namespace StateMachine {
     {   
         protected:
             using State_ = State<StateId, Event, FSM_STM>;
+
+            /**
+             * @brief Private state manager constructor to avoid creation 
+             *        of multiple instances of the class. 
+             * 
+             * @details 
+             * Creates initial state object.
+             * 
+             * @param sId Initial state id.
+             */
             StateManager(StateId sId) : currentStateId(sId)
             {
                 critical_section_init(&stateManagerLock);
                 state = StateFactory<StateId, Event, FSM_STM>::createState(sId, this);
             }
 
-            static StateManager * instance;
-            std::unique_ptr<State_> state;
-            critical_section_t stateManagerLock;
-            StateId currentStateId;
-            std::atomic_bool stateChanged = false;
-            std::atomic_bool initialized = false;
-
-            // Transition to a new state. Not thread-safe.
+            /**
+             * @brief Switch to a new state object.
+             * 
+             * @param newState Unique pointer to the state to transition to.
+             */
             void stateTransition(std::unique_ptr<State_> && newState)
             {
                 state = std::move(newState);
             }
 
+            static StateManager * instance;
+            critical_section_t stateManagerLock;
+            StateId currentStateId;
+            std::unique_ptr<State_> state;
+            std::atomic_bool stateChanged = false;
+            std::atomic_bool initialized = false;
+
         public:
-            // Singleton instance getter.
+            
+            /**
+             * @brief Singleton instance getter.
+             * 
+             * @param sId Initial state id.
+             * @return StateManager * Pointer to the StateManager.
+             */
             static StateManager * getInstance(StateId sId)
             {
                 // Acquire mutex to avoid creation of multiple instances of class
                 // by concurrent calls of this method.
                 lock_guard<mutex_t> mutexWrapper(createStateManagerMutex);
-
                 // If unique StateManager instance doesn't exist, create it.
                 if (instance == nullptr)
                 {
                     instance = new StateManager(sId);
                 }
-
                 // Return singleton.
                 return instance;
             }
 
-            // Handle event in current state.
+            /**
+             * @brief Handle an event and trigger a state transition if needed.
+             * 
+             * @param event Rvalue of event to handle.
+             */
             virtual void handleEvent(Event && event)
             {
                 auto lastStateId = currentStateId;
@@ -93,7 +126,10 @@ namespace StateMachine {
                 stateChanged = (lastStateId != currentStateId);
             }
 
-            // Monitor state changes, enter, run and exit states. To be called in a loop, from a single thread.
+            /**
+             * @brief Monitor state changes, enter, run and exit states. 
+             *        To be called in a loop, from a single thread.
+             */
             void run()
             {
                 // If state has changed
@@ -110,9 +146,9 @@ namespace StateMachine {
                     stateChanged = false;
                 }
 
-                // If initial state
+                // Enter initial state if not done yet
                 if(initialized == false)
-                {
+                {   
                     state->onEnter();
                     initialized = true;
                 }
@@ -121,12 +157,21 @@ namespace StateMachine {
                 state->run();
             }
 
-            // Get current state id.
+            /**
+             * @brief Get the current state id.
+             * 
+             * @return StateId Current state id.
+             */
             StateId getCurrentStateId() const noexcept
             {
                 return currentStateId;
             }
 
+            /**
+             * @brief Get the performing state id.
+             * 
+             * @return StateId Performing state id.
+             */
             virtual StateId getPerformingStateId() const noexcept
             {
                 return state->getStateId();

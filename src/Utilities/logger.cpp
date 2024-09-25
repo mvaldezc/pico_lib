@@ -13,6 +13,7 @@ namespace Utilities {
                 return;
             }
         #endif
+
         // If not initialized, initialize stdio
         static bool initialized = false;
         if (!initialized)
@@ -21,7 +22,8 @@ namespace Utilities {
             initialized = true;
         }
 
-        // Lock mutex to prevent multiple threads from writing to stdout at the same time
+        // Lock mutex to prevent multiple threads from writing 
+        // to stdout at the same time.
         lock_guard<mutex_t> lock(logMutex);
 
         switch (level)

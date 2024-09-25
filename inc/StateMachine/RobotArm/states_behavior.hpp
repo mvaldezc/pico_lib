@@ -1,3 +1,11 @@
+/***********************************************************************
+ * @file	:	states_behavior.hpp
+ * @brief 	:	RobotArm machine states
+ *              Defines the behavior of the states for a RobotArm.
+ * @author	:	Marco Valdez @mvaldezc
+ *
+ ***********************************************************************/
+
 #pragma once
 #include "state.hpp"
 #include "state_transition_matrix.hpp"

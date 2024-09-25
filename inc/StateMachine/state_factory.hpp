@@ -1,3 +1,11 @@
+/***********************************************************************
+ * @file	:	state_factory.hpp
+ * @brief 	:	StateFactory class
+ *              Template for creating states of a state machine.
+ * @author	:	Marco Valdez @mvaldezc
+ *
+ ***********************************************************************/
+
 #pragma once
 #include "state.hpp"
 #include <memory>
@@ -16,10 +24,26 @@ namespace StateMachine {
     template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
     class StateManager;
 
+    /**
+     * @class StateFactory
+     * @brief Creates state objects of a finite state machine following the factory design pattern.
+     * 
+     * @tparam StateId Enum class representing the possible states.
+     * @tparam Event Enum class representing the events that trigger state transitions.
+     * @tparam FSM_STM State transition matrix function pointer.
+     * 
+     */
     template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
     class StateFactory
     {
         public:
+            /**
+             * @brief Create a state object corresponding to the given state id.
+             * 
+             * @param sId State id.
+             * @param sManager State manager.
+             * @return std::unique_ptr<State> 
+             */
             static std::unique_ptr<State<StateId, Event, FSM_STM>> createState(StateId sId, StateManager<StateId, Event, FSM_STM> *sManager)
             {
                 return nullptr;

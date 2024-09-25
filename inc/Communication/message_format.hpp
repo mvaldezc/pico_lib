@@ -1,7 +1,7 @@
 /***********************************************************************
  * @file	:	message_format.hpp
  * @brief 	:	Message Format Interface
- *              Signature of message frame handlers.
+ *              Signature of message frame handlers and data structures.
  * @author	:	Marco Valdez @mvaldezc
  *
  ***********************************************************************/

@@ -1,3 +1,11 @@
+/***********************************************************************
+ * @file	:	logger.hpp
+ * @brief 	:	Logger utility
+ *              Library to log messages to stdout with different levels.
+ * @author	:	Marco Valdez @mvaldezc
+ *
+ ***********************************************************************/
+
 #pragma once
 #include <stdio.h>
 #include "pico/stdlib.h"
@@ -6,6 +14,9 @@
 
 namespace Utilities {
 
+    /**
+     * @brief Enum class to define the logger levels.
+     */
     enum class LogLevel
     {
         DEBUG,
@@ -14,7 +25,12 @@ namespace Utilities {
         ERROR
     };
 
-    // Function to log messages to uart/usb
+    /**
+     * @brief Function to log messages to stdout.
+     * 
+     * @param level LogLevel enum class.
+     * @param message Message to log.
+     */
     void log(LogLevel level, const char * message);
 
 } // namespace Utilities

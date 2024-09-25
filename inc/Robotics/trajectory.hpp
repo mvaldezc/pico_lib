@@ -1,3 +1,11 @@
+/***********************************************************************
+ * @file	:	trajectory.hpp
+ * @brief 	:	Waypoint container
+ *              Library to store waypoints of a trajectory.
+ * @author	:	Marco Valdez @mvaldezc
+ *
+ ***********************************************************************/
+
 #pragma once 
 #include <list>
 #include <cstdint>
@@ -27,7 +35,7 @@ namespace Robotics {
             size_t numOfWaypoints();
             
         private:
-            std::list<Waypoint_t> waypoints;
+            std::list<Waypoint_t> waypoints; // Linked list to store waypoints
     };
 
 } // namespace Robotics
