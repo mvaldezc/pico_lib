@@ -26,7 +26,7 @@ namespace Motor {
     };
 
     /**
-     * @interface IMotor
+     * @class IMotor
      * @brief Motor control driver interface.
      */
     class IMotor

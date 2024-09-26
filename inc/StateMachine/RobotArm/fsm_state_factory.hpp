@@ -13,6 +13,7 @@
 namespace StateMachine{
 
     /**
+     * @class StateFactory
      * @brief Template specialization of the StateFactory class for the RobotArm finite state machine.
      */
     template <>

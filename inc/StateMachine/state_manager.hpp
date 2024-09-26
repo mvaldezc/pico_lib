@@ -22,11 +22,11 @@ namespace StateMachine {
     using StateTransMatrix = StateId (*)(StateId, Event);
 
     // State forward declaration
-    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
+    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class State;
 
     // StateFactory forward declaration
-    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
+    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class StateFactory;
 
     // equivalent to static mutex declaration + mutex_init()
@@ -47,14 +47,14 @@ namespace StateMachine {
      * 
      * @tparam StateId Enum class representing the possible states.
      * @tparam Event Enum class representing the events that trigger state transitions.
-     * @tparam FSM_STM State transition matrix function pointer.
+     * @tparam stateTransMatrix State transition matrix function pointer.
      * 
      */
-    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
+    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class StateManager
     {   
         protected:
-            using State_ = State<StateId, Event, FSM_STM>;
+            using State_ = State<StateId, Event, stateTransMatrix>;
 
             /**
              * @brief Private state manager constructor to avoid creation 
@@ -68,7 +68,7 @@ namespace StateMachine {
             StateManager(StateId sId) : currentStateId(sId)
             {
                 critical_section_init(&stateManagerLock);
-                state = StateFactory<StateId, Event, FSM_STM>::createState(sId, this);
+                state = StateFactory<StateId, Event, stateTransMatrix>::createState(sId, this);
             }
 
             /**
@@ -120,7 +120,7 @@ namespace StateMachine {
                 auto lastStateId = currentStateId;
                 critical_section_enter_blocking(&stateManagerLock);
                 // Update the current state based on the event using the state transition matrix
-                currentStateId = FSM_STM(currentStateId, event);
+                currentStateId = stateTransMatrix(currentStateId, event);
                 critical_section_exit(&stateManagerLock);
                 // If state has changed
                 stateChanged = (lastStateId != currentStateId);
@@ -138,7 +138,7 @@ namespace StateMachine {
                     // Exit current state
                     state->onExit();
                     // Create new state
-                    auto newState = StateFactory<StateId, Event, FSM_STM>::createState(currentStateId, this);
+                    auto newState = StateFactory<StateId, Event, stateTransMatrix>::createState(currentStateId, this);
                     // Transition to new state
                     stateTransition(std::move(newState));
                     // Enter new state
@@ -188,7 +188,7 @@ namespace StateMachine {
     };
 
     // Initialize static member
-    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
-    StateManager<StateId, Event, FSM_STM> *StateManager<StateId, Event, FSM_STM>::instance{nullptr};
+    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
+    StateManager<StateId, Event, stateTransMatrix> *StateManager<StateId, Event, stateTransMatrix>::instance{nullptr};
 
 } // namespace StateMachine

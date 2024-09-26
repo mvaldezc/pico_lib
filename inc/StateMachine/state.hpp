@@ -17,7 +17,7 @@ namespace StateMachine {
     using StateTransMatrix = StateId(*)(StateId, Event);
 
     // StateManager forward declaration
-    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
+    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class StateManager;
 
     /**
@@ -28,14 +28,14 @@ namespace StateMachine {
      *
      * @tparam StateId Enum class representing the possible states.
      * @tparam Event Enum class representing the events that trigger state transitions.
-     * @tparam FSM_STM State transition matrix function pointer.
+     * @tparam stateTransMatrix State transition matrix function pointer.
      *
      */
-    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
+    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class State
     {
     protected:
-        using StateManager_ = StateManager<StateId, Event, FSM_STM>;
+        using StateManager_ = StateManager<StateId, Event, stateTransMatrix>;
 
     public:
         State(StateId sId, StateManager_ * sManager)

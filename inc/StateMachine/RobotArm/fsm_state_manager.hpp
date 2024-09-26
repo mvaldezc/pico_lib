@@ -15,6 +15,7 @@ namespace StateMachine {
 	namespace RobotArm {
 		
 		/**
+		 * @class FSMStateManager
 		 * @brief StateManager for the RobotArm finite state machine.
 		 * 
 		 * @tparam StateId Enum class representing the possible states.

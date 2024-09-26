@@ -17,11 +17,11 @@ namespace StateMachine {
     using StateTransMatrix = StateId (*)(StateId, Event);
 
     // State forward declaration
-    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
+    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class State;
 
     // StateManager forward declaration
-    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
+    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class StateManager;
 
     /**
@@ -30,10 +30,10 @@ namespace StateMachine {
      * 
      * @tparam StateId Enum class representing the possible states.
      * @tparam Event Enum class representing the events that trigger state transitions.
-     * @tparam FSM_STM State transition matrix function pointer.
+     * @tparam stateTransMatrix State transition matrix function pointer.
      * 
      */
-    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> FSM_STM>
+    template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class StateFactory
     {
         public:
@@ -44,7 +44,7 @@ namespace StateMachine {
              * @param sManager State manager.
              * @return std::unique_ptr<State> 
              */
-            static std::unique_ptr<State<StateId, Event, FSM_STM>> createState(StateId sId, StateManager<StateId, Event, FSM_STM> *sManager)
+            static std::unique_ptr<State<StateId, Event, stateTransMatrix>> createState(StateId sId, StateManager<StateId, Event, stateTransMatrix> *sManager)
             {
                 return nullptr;
             };
