@@ -5,6 +5,7 @@
 /cmake_install.cmake
 /Makefile
 /tests/build/
+/documentation/html/
 
 # Ignore generated files
 *.o
