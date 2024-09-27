@@ -2,11 +2,11 @@
 
 ## 1. Description
 
-<img src="readme_misc/_DSF3371_edit.jpg" align="right" width="424" height="283"/>
+<img src="readme_misc/_DSF3371_edit.jpg" align="right" width="372" height="248"/>
 
 The primary purpose of this repository is to provide a set of core reusable low level features that enable robotic related functionality on a [Raspberry Pico 2](https://www.raspberrypi.com/products/raspberry-pi-pico-2/). This implementation can be tailored to specific robotic applications.
 
-The set of features include:
+**Features:**
 
 <details>
 <summary>State-machine management</summary>
