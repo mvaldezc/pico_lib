@@ -22,7 +22,6 @@ namespace StateMachine {
 
     /**
      * @class State
-     *
      * @brief Abstract class representing a state of a finite state machine.
      *        It encapsulates the state's behavior.
      *

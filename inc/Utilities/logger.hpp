@@ -27,9 +27,8 @@ namespace Utilities {
 
     /**
      * @brief Function to log messages to stdout.
-     * 
-     * @param level LogLevel enum class.
-     * @param message Message to log.
+     * @param[in] level LogLevel enum class.
+     * @param[in] message Message to log.
      */
     void log(LogLevel level, const char * message);
 

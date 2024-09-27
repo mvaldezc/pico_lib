@@ -58,12 +58,8 @@ namespace StateMachine {
 
             /**
              * @brief Private state manager constructor to avoid creation 
-             *        of multiple instances of the class. 
-             * 
-             * @details 
-             * Creates initial state object.
-             * 
-             * @param sId Initial state id.
+             *        of multiple instances of the class. Creates initial state object.
+             * @param[in] sId Initial state id.
              */
             StateManager(StateId sId) : currentStateId(sId)
             {
@@ -73,8 +69,7 @@ namespace StateMachine {
 
             /**
              * @brief Switch to a new state object.
-             * 
-             * @param newState Unique pointer to the state to transition to.
+             * @param[in] newState Unique pointer to the state to transition to.
              */
             void stateTransition(std::unique_ptr<State_> && newState)
             {
@@ -92,8 +87,7 @@ namespace StateMachine {
             
             /**
              * @brief Singleton instance getter.
-             * 
-             * @param sId Initial state id.
+             * @param[in] sId Initial state id.
              * @return StateManager * Pointer to the StateManager.
              */
             static StateManager * getInstance(StateId sId)
@@ -112,8 +106,7 @@ namespace StateMachine {
 
             /**
              * @brief Handle an event and trigger a state transition if needed.
-             * 
-             * @param event Rvalue of event to handle.
+             * @param[in] event Rvalue of event to handle.
              */
             virtual void handleEvent(Event && event)
             {
@@ -159,7 +152,6 @@ namespace StateMachine {
 
             /**
              * @brief Get the current state id.
-             * 
              * @return StateId Current state id.
              */
             StateId getCurrentStateId() const noexcept
@@ -169,7 +161,6 @@ namespace StateMachine {
 
             /**
              * @brief Get the performing state id.
-             * 
              * @return StateId Performing state id.
              */
             virtual StateId getPerformingStateId() const noexcept

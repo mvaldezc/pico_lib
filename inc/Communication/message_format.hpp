@@ -33,7 +33,6 @@ namespace Communication {
 
     /**
      * @brief Circular buffer data structure to store received messages through ISR. Not thread safe.
-     * 
      * @tparam T Data type to store in the buffer
      */
     template <typename T>

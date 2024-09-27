@@ -30,12 +30,13 @@
 #define TX_IRQ RD_REQ
 #define DMA_TX 0x2
 #define DMA_RX 0x1
-// Declare config constants
-constexpr uint I2C_BAUD_RATE = 400000;      // I2C baud rate b/s
-constexpr uint8_t DEFAULT_I2C_SLAVE_ADDRESS = 0x55; // I2C device address
 
 namespace Communication {
 namespace Hardware {
+
+    // Declare config constants
+    constexpr uint DEFAULT_I2C_BAUD_RATE = 400000;      // I2C baud rate b/s
+    constexpr uint8_t DEFAULT_I2C_SLAVE_ADDRESS = 0x55; // I2C device address
 
     /**
      * @class I2CSlave
@@ -55,20 +56,20 @@ namespace Hardware {
              * @param[in] address I2C slave address.
              * @param[in] dmaEnabled Enable or disable DMA transfers.
              */
-            static void init(RxHandler rxHandlerPtr, TxHandler txHandlerPtr, uint8_t address, bool enableDMA = true)
+            static void init(RxHandler rxHandlerPtr, TxHandler txHandlerPtr, uint8_t address, uint baudRate, bool enableDMA = true)
             {
                 rxHandler = rxHandlerPtr;
                 txHandler = txHandlerPtr;
                 dmaEnabled = enableDMA;
 
                 // Use I2C0 on the default SDA and SCL pins (GP4, GP5 on a Pico)
-                gpio_set_dir(PICO_DEFAULT_I2C_SDA_PIN, 0);
-                gpio_set_dir(PICO_DEFAULT_I2C_SCL_PIN, 0);
+                gpio_set_dir(PICO_DEFAULT_I2C_SDA_PIN, GPIO_IN);
+                gpio_set_dir(PICO_DEFAULT_I2C_SCL_PIN, GPIO_IN);
                 gpio_set_function(PICO_DEFAULT_I2C_SDA_PIN, GPIO_FUNC_I2C);
                 gpio_set_function(PICO_DEFAULT_I2C_SCL_PIN, GPIO_FUNC_I2C);
                 gpio_pull_up(PICO_DEFAULT_I2C_SDA_PIN);
                 gpio_pull_up(PICO_DEFAULT_I2C_SCL_PIN);
-                i2c_init(i2c0, I2C_BAUD_RATE);
+                i2c_init(i2c0, baudRate);
                 i2c_set_slave_mode(i2c0, true, address);
 
                 // Set interrupt mask of i2c0 hardware (activate slave write and slave read)

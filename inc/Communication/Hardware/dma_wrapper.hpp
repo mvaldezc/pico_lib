@@ -28,6 +28,10 @@ constexpr uint8_t RING_BITS = [](){
 namespace Communication {
 namespace Hardware {
 
+    /**
+     * @class RxDMA
+     * @brief RAII class to manage DMA transfers to receive data from peripherals.
+     */
     class RxDMA
     {
         public:
