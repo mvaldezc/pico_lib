@@ -41,7 +41,7 @@ namespace StateMachine {
              * @brief Create a state object corresponding to the given state id.
              * @param[in] sId State id.
              * @param[in] sManager State manager.
-             * @return std::unique_ptr<State> 
+             * @return Unique pointer to the state object.
              */
             static std::unique_ptr<State<StateId, Event, stateTransMatrix>> createState(StateId sId, StateManager<StateId, Event, stateTransMatrix> *sManager)
             {

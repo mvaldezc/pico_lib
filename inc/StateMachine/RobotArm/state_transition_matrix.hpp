@@ -52,7 +52,7 @@ namespace RobotArm {
      * @brief State transition matrix of the RobotArm finite state machine.
      * @param[in] currentState Current state.
      * @param[in] event Event.
-     * @return StateId Next state.
+     * @return Next state.
      */
     StateId stateTransMatrix(StateId currentState, Event event);
 

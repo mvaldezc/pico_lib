@@ -12,6 +12,7 @@
 #include "configuration_space.hpp"
 
 namespace Robotics {
+    
     /**
      * @class Trajectory
      * @brief This class is responsible for storing the waypoints of a trajectory.

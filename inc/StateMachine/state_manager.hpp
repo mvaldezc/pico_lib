@@ -17,15 +17,15 @@
 
 namespace StateMachine {
 
-    // State transition matrix data type
+    // Type alias for the state transition matrix function
     template <typename StateId, typename Event>
     using StateTransMatrix = StateId (*)(StateId, Event);
 
-    // State forward declaration
+    // Forward declaration of State
     template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class State;
 
-    // StateFactory forward declaration
+    // Forward declaration of StateFactory
     template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class StateFactory;
 
@@ -34,14 +34,13 @@ namespace StateMachine {
 
     /**
      * @class StateManager
-     * @brief Manages a finite state machine.
-     * StateManager is defined as a leaky singleton. It provides a thread/ISR-safe API for 
-     * triggering state transitions via events and running the state's behavior. Template parameters
-     * allow defining the sets of states, events, and the state transition matrix.
+     * @brief Manages a finite state machine as a thread/ISR-safe leaky singleton.
      * 
-     * @details
-     * It implements a static mutex to avoid race conditions during singleton creation.
-     * It uses a critical_section for concurrent access of its non-reentrant methods.
+     * The StateManager handles state transitions based on events, manages the current state, 
+     * and executes the state's behavior. The class is thread/ISR-safe and uses a critical 
+     * section for concurrent access to non-reentrant methods.
+     * 
+     * Template parameters allow defining the sets of states, events, and state transitions.
      * It runs state-behavior folowing the state-machine design pattern.
      * NOTE: For template classes, all member function definitions must be in the header file. 
      * 
@@ -57,19 +56,19 @@ namespace StateMachine {
             using State_ = State<StateId, Event, stateTransMatrix>;
 
             /**
-             * @brief Private state manager constructor to avoid creation 
-             *        of multiple instances of the class. Creates initial state object.
+             * @brief Private constructor to prevent multiple instances.
              * @param[in] sId Initial state id.
              */
             StateManager(StateId sId) : currentStateId(sId)
             {
                 critical_section_init(&stateManagerLock);
+                // Create initial state object
                 state = StateFactory<StateId, Event, stateTransMatrix>::createState(sId, this);
             }
 
             /**
-             * @brief Switch to a new state object.
-             * @param[in] newState Unique pointer to the state to transition to.
+             * @brief Transitions to a new state.
+             * @param[in] newState Unique pointer to the new state.
              */
             void stateTransition(std::unique_ptr<State_> && newState)
             {
@@ -86,9 +85,9 @@ namespace StateMachine {
         public:
             
             /**
-             * @brief Singleton instance getter.
-             * @param[in] sId Initial state id.
-             * @return StateManager * Pointer to the StateManager.
+             * @brief Retrieves the singleton instance.
+             * @param[in] sId Initial state ID.
+             * @return Pointer to the StateManager.
              */
             static StateManager * getInstance(StateId sId)
             {
@@ -105,7 +104,7 @@ namespace StateMachine {
             }
 
             /**
-             * @brief Handle an event and trigger a state transition if needed.
+             * @brief Handle an event and triggers a state transition if necessary.
              * @param[in] event Rvalue of event to handle.
              */
             virtual void handleEvent(Event && event)
@@ -152,7 +151,7 @@ namespace StateMachine {
 
             /**
              * @brief Get the current state id.
-             * @return StateId Current state id.
+             * @return Current state id.
              */
             StateId getCurrentStateId() const noexcept
             {
@@ -161,7 +160,7 @@ namespace StateMachine {
 
             /**
              * @brief Get the performing state id.
-             * @return StateId Performing state id.
+             * @return Performing state id.
              */
             virtual StateId getPerformingStateId() const noexcept
             {

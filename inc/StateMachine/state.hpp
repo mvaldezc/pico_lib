@@ -33,21 +33,21 @@ namespace StateMachine {
     template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class State
     {
-    protected:
-        using StateManager_ = StateManager<StateId, Event, stateTransMatrix>;
+        protected:
+            using StateManager_ = StateManager<StateId, Event, stateTransMatrix>;
 
-    public:
-        State(StateId sId, StateManager_ * sManager)
-            : currentState(sId), manager(sManager) {}; // Enforce child to call this constructor
-        virtual void run() = 0;     // Behavior to be run continuously
-        virtual void onEnter() = 0; // Behavior to be run when entering the state
-        virtual void onExit() = 0;  // Behavior to be run when exiting the state
-        virtual ~State() {};
-        StateId getStateId() const noexcept {return currentState;} 
+        public:
+            State(StateId sId, StateManager_ * sManager)
+                : currentState(sId), manager(sManager) {}; // Enforce child to call this constructor
+            virtual void run() = 0;     // Behavior to be run continuously
+            virtual void onEnter() = 0; // Behavior to be run when entering the state
+            virtual void onExit() = 0;  // Behavior to be run when exiting the state
+            virtual ~State() {};
+            StateId getStateId() const noexcept {return currentState;} 
 
-    protected:
-        const StateId currentState;
-        const StateManager_ * manager;
+        protected:
+            const StateId currentState;
+            const StateManager_ * manager;
     };
     
 }   // namespace StateMachine

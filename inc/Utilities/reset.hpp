@@ -11,13 +11,13 @@
 
 namespace Utilities {
 
-/**
- * @brief Reset the microcontroller using the watchdog timer.
- */
-inline void reset()
-{
-    watchdog_enable(50, 1);
-    while(1);
-}
+    /**
+     * @brief Reset the microcontroller using the watchdog timer.
+     */
+    inline void reset()
+    {
+        watchdog_enable(50, 1);
+        while(1);
+    }
 
 } // namespace Utilities
