@@ -72,5 +72,7 @@ namespace RobotArm {
 
     void uninstallDataContainer();
 
+    std::shared_ptr<Robotics::Trajectory> getContainer();
+
 } // namespace RobotArm
 } // namespace Communication

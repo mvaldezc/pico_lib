@@ -5,18 +5,18 @@
 using namespace Communication;
 
 TEST(QueueTest, Initialization) {
-    Queue queue;
+    Queue<uint16_t> queue;
     EXPECT_TRUE(queue.isEmpty());
     EXPECT_FALSE(queue.isFull());
     EXPECT_EQ(queue.size(), 0);
 }
 
 TEST(QueueTest, PushAndPop) {
-    Queue queue;
-    uint8_t value;
+    Queue<uint16_t> queue;
+    uint16_t value;
 
     // Push elements into the queue
-    for (uint8_t i = 0; i < 10; ++i) {
+    for (uint16_t i = 0; i < 10; ++i) {
         EXPECT_TRUE(queue.push(i));
     }
 
@@ -25,7 +25,7 @@ TEST(QueueTest, PushAndPop) {
     EXPECT_FALSE(queue.isFull());
 
     // Pop elements from the queue
-    for (uint8_t i = 0; i < 10; ++i) {
+    for (uint16_t i = 0; i < 10; ++i) {
         EXPECT_TRUE(queue.pop(value));
         EXPECT_EQ(value, i);
     }
@@ -36,11 +36,11 @@ TEST(QueueTest, PushAndPop) {
 }
 
 TEST(QueueTest, Overflow) {
-    Queue queue;
+    Queue<uint16_t> queue;
 
     // Fill the queue
     for (size_t i = 0; i < BUFFER_SIZE; ++i) {
-        EXPECT_TRUE(queue.push(static_cast<uint8_t>(i)));
+        EXPECT_TRUE(queue.push(static_cast<uint16_t>(i)));
     }
 
     EXPECT_TRUE(queue.isFull());
@@ -48,19 +48,19 @@ TEST(QueueTest, Overflow) {
 }
 
 TEST(QueueTest, Underflow) {
-    Queue queue;
-    uint8_t value;
+    Queue<uint16_t> queue;
+    uint16_t value;
 
     // Try to pop from an empty queue
     EXPECT_FALSE(queue.pop(value));
 }
 
 TEST(QueueTest, Clear) {
-    Queue queue;
+    Queue<uint16_t> queue;
 
     // Fill the queue
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_TRUE(queue.push(static_cast<uint8_t>(i)));
+        EXPECT_TRUE(queue.push(static_cast<uint16_t>(i)));
     }
 
     EXPECT_FALSE(queue.isEmpty());
@@ -74,10 +74,10 @@ TEST(QueueTest, Clear) {
 }
 
 TEST(QueueTest, Front) {
-    Queue queue;
+    Queue<uint16_t> queue;
 
     // Push elements into the queue
-    for (uint8_t i = 0; i < 10; ++i) {
+    for (uint16_t i = 0; i < 10; ++i) {
         EXPECT_TRUE(queue.push(i));
     }
 

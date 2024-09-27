@@ -50,12 +50,29 @@ protected:
     std::shared_ptr<MockTrajectory> programData;
 };
 
-TEST_F(CommunicationHandlerTest, EmergencyStopCallback) {
+TEST(DataContainer, install)
+{
+    std::shared_ptr<MockTrajectory> cont = std::make_shared<MockTrajectory>();
+    installDataContainer(cont);
+    ASSERT_EQ(getContainer(), cont);
+}
+
+TEST(DataContainer, uninstall)
+{
+    std::shared_ptr<MockTrajectory> cont = std::make_shared<MockTrajectory>();
+    installDataContainer(cont);
+    uninstallDataContainer();
+    ASSERT_EQ(getContainer(), nullptr);
+}
+
+TEST_F(CommunicationHandlerTest, EmergencyStopCallback) 
+{
     EXPECT_CALL(mockStateManager, handleEvent(StateMachine::RobotArm::Event::EmergencyStop));
     emergencyStopCallback(nullptr, 0);
 }
 
-TEST_F(CommunicationHandlerTest, ProgramDataCallback) {
+TEST_F(CommunicationHandlerTest, ProgramDataCallback) 
+{
     uint8_t data[] = {1, 2, 3, 4};
     size_t dataLength = sizeof(data);
 
@@ -65,7 +82,8 @@ TEST_F(CommunicationHandlerTest, ProgramDataCallback) {
     programDataCallback(data, dataLength);
 }
 
-TEST_F(CommunicationHandlerTest, ProgramDataCallbackNoDataContainer) {
+TEST_F(CommunicationHandlerTest, ProgramDataCallbackNoDataContainer) 
+{
     uninstallDataContainer();
     uint8_t data[] = {1, 2, 3, 4};
     size_t dataLength = sizeof(data);
@@ -76,7 +94,8 @@ TEST_F(CommunicationHandlerTest, ProgramDataCallbackNoDataContainer) {
     programDataCallback(data, dataLength);
 }
 
-TEST_F(CommunicationHandlerTest, ProgramDataCallbackWrongState) {
+TEST_F(CommunicationHandlerTest, ProgramDataCallbackWrongState) 
+{
     uint8_t data[] = {1, 2, 3, 4};
     size_t dataLength = sizeof(data);
 
@@ -86,7 +105,8 @@ TEST_F(CommunicationHandlerTest, ProgramDataCallbackWrongState) {
     programDataCallback(data, dataLength);
 }
 
-TEST_F(CommunicationHandlerTest, ProgramDataCallbackNoData) {
+TEST_F(CommunicationHandlerTest, ProgramDataCallbackNoData) 
+{
     size_t dataLength = 0;
 
     EXPECT_CALL(mockStateManager, getPerformingStateId())
@@ -95,14 +115,16 @@ TEST_F(CommunicationHandlerTest, ProgramDataCallbackNoData) {
     programDataCallback(nullptr, dataLength);
 }
 
-TEST_F(CommunicationHandlerTest, ResetCallback) {
+TEST_F(CommunicationHandlerTest, ResetCallback) 
+{
     // expect call of reset function from reset.hpp not belonging to any class
     ASSERT_EQ(resetCalled, false);
     resetCallback(nullptr, 0);
     ASSERT_EQ(resetCalled, true);
 }
 
-TEST_F(CommunicationHandlerTest, RxCallback) {
+TEST_F(CommunicationHandlerTest, RxCallback) 
+{
     uint8_t data[] = {1, 2, 3, 4};
     size_t dataLength = sizeof(data);
 
@@ -110,11 +132,11 @@ TEST_F(CommunicationHandlerTest, RxCallback) {
     rxCallback(RAW(RxIds::EMERGENCY_STOP), dataLength, data);
 }
 
-TEST_F(CommunicationHandlerTest, RxCallbackUndefinedMessageId) {
+TEST_F(CommunicationHandlerTest, RxCallbackUndefinedMessageId) 
+{
     uint8_t data[] = {1, 2, 3, 4};
     size_t dataLength = sizeof(data);
 
     EXPECT_CALL(mockStateManager, handleEvent(_)).Times(0);
     rxCallback(0xFF, dataLength, data);
 }
-

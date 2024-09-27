@@ -93,5 +93,10 @@ namespace RobotArm{
         programData.reset();
     }
 
+    std::shared_ptr<Robotics::Trajectory> getContainer()
+    {
+        return programData;
+    }
+
 } // namespace RobotArm
 } // namespace Communication

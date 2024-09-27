@@ -97,7 +97,7 @@ namespace Hardware {
             I2CSlave()= default; // Private constructor to avoid instance creation
             static RxHandler rxHandler;
             static TxHandler txHandler;
-            static Queue rxBuffer;
+            static Queue<uint8_t> rxBuffer;
             static bool txInProgress;
             static bool rxInProgress;
             static RxDMA dma;

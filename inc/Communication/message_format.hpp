@@ -29,16 +29,19 @@ namespace Communication {
      */
     typedef void (*TxHandler)(uint8_t * data);
 
-    constexpr size_t BUFFER_SIZE = 256; // Maximum message length in bytes
+    constexpr size_t BUFFER_SIZE = 32; // Maximum message length in bytes
 
     /**
      * @brief Circular buffer data structure to store received messages through ISR. Not thread safe.
+     * 
+     * @tparam T Data type to store in the buffer
      */
+    template <typename T>
     struct Queue
     {
-        uint8_t data_[BUFFER_SIZE];
-        uint8_t readNode;
-        uint8_t writeNode;
+        T data_[BUFFER_SIZE];
+        size_t readNode;
+        size_t writeNode;
         size_t capacity;
 
         Queue() : readNode(0), writeNode(0), capacity(0) {}
@@ -53,24 +56,24 @@ namespace Communication {
             return capacity == 0;
         }
 
-        inline bool push(uint8_t data)
+        inline bool push(T data)
         {
             if (isFull()) {
                 return false; // Buffer is full
             }
             data_[writeNode] = data;
-            writeNode = (writeNode + 1) % BUFFER_SIZE;
+            writeNode = (writeNode + sizeof(T)) % (BUFFER_SIZE / sizeof(T));
             capacity++;
             return true;
         }
 
-        inline bool pop(uint8_t &data)
+        inline bool pop(T & data)
         {
             if (isEmpty()) {
                 return false; // Buffer is empty
             }
             data = data_[readNode];
-            readNode = (readNode + 1) % BUFFER_SIZE;
+            readNode = (readNode + sizeof(T)) % (BUFFER_SIZE / sizeof(T));
             capacity--;
             return true;
         }
@@ -88,7 +91,7 @@ namespace Communication {
             return capacity;
         }
 
-        inline uint8_t * front()
+        inline T * front()
         {
             return & data_[readNode];
         }
