@@ -61,7 +61,7 @@ namespace Communication {
                 return false; // Buffer is full
             }
             data_[writeNode] = data;
-            writeNode = (writeNode + sizeof(T)) % (BUFFER_SIZE / sizeof(T));
+            writeNode = (writeNode + sizeof(T)) % BUFFER_SIZE;
             capacity++;
             return true;
         }
@@ -72,7 +72,7 @@ namespace Communication {
                 return false; // Buffer is empty
             }
             data = data_[readNode];
-            readNode = (readNode + sizeof(T)) % (BUFFER_SIZE / sizeof(T));
+            readNode = (readNode + sizeof(T)) % BUFFER_SIZE;
             capacity--;
             return true;
         }

@@ -1,7 +1,7 @@
 /***********************************************************************
  * @file	:	fsm_state_manager.hpp
- * @brief 	:	RobotArm StateManager class
- *              Library for RobotArm finite state machine functionality.
+ * @brief 	:	Robotic arm StateManager class
+ *              Library for robotic arm finite state machine functionality.
  * @author	:	Marco Valdez @mvaldezc
  *
  ***********************************************************************/
@@ -16,7 +16,7 @@ namespace RobotArm {
 	
 	/**
 	 * @class FSMStateManager
-	 * @brief StateManager for the RobotArm finite state machine.
+	 * @brief StateManager for the robotic arm finite state machine.
 	 * 
 	 * @tparam StateId Enum class representing the possible states.
 	 * @tparam Event Enum class representing the events that trigger state transitions.

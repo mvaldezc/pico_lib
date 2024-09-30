@@ -25,13 +25,11 @@ namespace StateMachine {
     class StateManager;
 
     /**
-     * @class StateFactory
      * @brief Creates state objects of a finite state machine following the factory design pattern.
      * 
      * @tparam StateId Enum class representing the possible states.
      * @tparam Event Enum class representing the events that trigger state transitions.
      * @tparam stateTransMatrix State transition matrix function pointer.
-     * 
      */
     template <typename StateId, typename Event, StateTransMatrix<StateId, Event> stateTransMatrix>
     class StateFactory

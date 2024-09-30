@@ -35,6 +35,9 @@ namespace Hardware {
     class RxDMA
     {
         public:
+            /**
+             * @brief Configures the DMA channel for receiving data from a circular buffer.
+             */
             RxDMA()
             {
                 // Allocate a dma channel
@@ -55,6 +58,9 @@ namespace Hardware {
                 dma_channel_unclaim(channel);
             }
 
+            /**
+             * @brief Returns the next write address in the circular buffer.
+             */
             uint8_t * getWriteAddress()
             {
                 return reinterpret_cast<uint8_t*> (dma_channel_hw_addr(channel)->write_addr);

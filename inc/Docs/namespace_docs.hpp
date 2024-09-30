@@ -9,12 +9,12 @@
 
 /**
  * @namespace StateMachine::RobotArm
- * @brief Contains the specific finite state machine details for a RobotArm.
+ * @brief Contains the specific finite state machine details for a robotic arm.
  */
 
 /**
  * @namespace StateMachine::RobotArm::States
- * @brief Contains the classes that define the behavior of the states of a RobotArm.
+ * @brief Contains the classes that define the behavior of the states of a robotic arm.
  */
 
 /**
@@ -29,7 +29,7 @@
 
 /**
  * @namespace Communication::RobotArm
- * @brief Contains the communication interfaces for the RobotArm.
+ * @brief Contains the communication interfaces for the robotic arm.
  */
 
 /**
@@ -45,4 +45,9 @@
 /**
  * @namespace Utilities
  * @brief Contains utility classes and functions.
+ */
+
+/**
+ * @namespace Tests
+ * @brief Contains the test cases for the different modules.
  */

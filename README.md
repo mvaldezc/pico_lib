@@ -8,11 +8,11 @@ The primary purpose of this repository is to provide a set of core reusable low 
 
 **Features:**
 
-<details>
+<details open>
 <summary>State-machine management</summary>
 <br>
 
-State management is based on the [state design pattern](https://en.wikipedia.org/wiki/State_pattern). It handles state transitions based on events. 
+State management is based on the [state design pattern](https://refactoring.guru/design-patterns/state). It handles state transitions based on events. 
 
  * **Functionality**
    * State manager
@@ -23,11 +23,11 @@ State management is based on the [state design pattern](https://en.wikipedia.org
 
 </details>
 
-<details>
+<details open>
 <summary>Low-level communication</summary>
 <br>
 
-Communication is service-based, inspired by [UDS](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services). It provides callbacks for each message id.
+The communication library is service-based, inspired by [UDS](https://en.wikipedia.org/wiki/Unified_Diagnostic_Services). It provides callbacks for each message id.
 
 * **Interfaces**
     * Service Ids
@@ -44,7 +44,7 @@ Communication is service-based, inspired by [UDS](https://en.wikipedia.org/wiki/
 
 </details>
 
-<details>
+<details open>
 <summary>MCU utilities</summary>
 <br>
 
@@ -57,7 +57,7 @@ MCU related functions
 
 </details>
 
-<details>
+<details open>
 <summary>Unit tests for core functionality</summary>
 <br>
 

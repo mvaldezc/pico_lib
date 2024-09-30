@@ -1,7 +1,7 @@
 /***********************************************************************
  * @file	:	states_behavior.hpp
- * @brief 	:	RobotArm machine states
- *              Defines the behavior of the states for a RobotArm.
+ * @brief 	:	Robotic arm machine states
+ *              Defines the behavior of the states for a robotic arm.
  * @author	:	Marco Valdez @mvaldezc
  *
  ***********************************************************************/

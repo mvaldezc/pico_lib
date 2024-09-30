@@ -1,7 +1,7 @@
 /***********************************************************************
  * @file	:	fsm_state_factory.hpp
- * @brief 	:	RobotArm StateFactory specialization
- *              Library to create states of a RobotArm state machine.
+ * @brief 	:	Robotic arm StateFactory specialization
+ *              Library to create states of a robotic arm state machine.
  * @author	:	Marco Valdez @mvaldezc
  *
  ***********************************************************************/
@@ -13,8 +13,7 @@
 namespace StateMachine{
 
     /**
-     * @class StateFactory
-     * @brief Template specialization of the StateFactory class for the RobotArm finite state machine.
+     * @brief Template specialization of the StateFactory class for the robotic arm finite state machine.
      */
     template <>
     class StateFactory<RobotArm::StateId, RobotArm::Event, RobotArm::stateTransMatrix>

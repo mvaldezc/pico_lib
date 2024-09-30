@@ -13,7 +13,6 @@ namespace Robotics {
 
     inline constexpr float PI = std::numbers::pi_v<float>;
 
-
     /**
      * @brief Enum class to define the topology of the generalized coordinates.
      */
